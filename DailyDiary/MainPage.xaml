@@ -8,6 +8,18 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+        <StackPanel Orientation="Vertical">
+            <ListView x:Name="Todos">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock FontSize="25" Text="{Binding whatToDO}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <TextBox x:Name="NewTodoTxtBox" FontSize="25" Header="New Todo:"/>
+            <Button x:Name="InsertTodoBtn" Click="InsertTodoBtn_Click" Content="Insert New Todo" Margin="0,20,0,0"/>
+        </StackPanel>
     </Grid>
 </Page>

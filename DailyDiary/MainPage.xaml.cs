@@ -12,36 +12,77 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using MySql;
-using DailyDiary.ViewModel;///nama class
-using System.Collections.ObjectModel;
-using DailyDiary.Model;///nama class
-/// </summary>
 
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
+// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace DailyDiary
+namespace DailyDiary.View
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
     public sealed partial class MainPage : Page
     {
-
         public MainPage()
         {
             this.InitializeComponent();
+            MainFrame.Navigate(typeof(Write.NewDiary));
         }
 
-        private void InsertTodoBtn_Click(object sender, RoutedEventArgs e)
+        private void HamburgerButton_Click(object sender, RoutedEventArgs e)
         {
-            // Try the the View Model insertion and check externally for result
-            App.TODO_VIEW_MODEL.InsertNewTodo(NewTodoTxtBox.Text);
+            MySplitView.IsPaneOpen = !MySplitView.IsPaneOpen;
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Todos.ItemsSource = App.TODO_VIEW_MODEL.GetTodos();
+            var x = (e.AddedItems[0] as ListViewItem).Name;
+
+            switch(x)
+            {
+                case "Write":
+                    MainFrame.Navigate(typeof(Write.NewDiary));
+                    break;
+                case "View":
+                    MainFrame.Navigate(typeof(ViewDiary));
+                    break;
+                //case "Greet":
+                ////    MainFrame.Navigate(typeof(Write.NewDiary));
+                ////    break;
+            }
         }
+
+        private void MenuButton1_Click(object sender, RoutedEventArgs e)
+        {
+                MainFrame.Navigate(typeof(Write.NewDiary));
+
+        }
+
+        private void MenuButton2_Click(object sender, RoutedEventArgs e)
+        {
+            if (!(MainFrame.Navigate(typeof(Diaries.ViewDiary))))
+            {
+                MainFrame.Navigate(typeof(Write.NewDiary));
+            }
+            else
+            {
+
+            }
+               
+        }
+
+        private void InnerFlyoutButton_Click(object sender, RoutedEventArgs e)
+        {
+            MyFlyout.Hide();
+        }
+
+        private void New_Click(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Navigate(typeof(Write.NewDiary));
+        }
+        
+    }
+
+    public class ViewDiary
+    {
     }
 }
